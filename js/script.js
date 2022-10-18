@@ -10,17 +10,17 @@ let squareNumbers;
 let squareRow;
 
 //FUNCTION WITH CLICK-------------------------------------
-/* StartGame - Play Btn */
+/* START GAME - Play Btn */
 function startgame() {
-   //Clean the code
-   mainDiv.innerHTML = "";
-  //Layout grid in base a level 
+  //Clean the code
+  mainDiv.innerHTML = "";
+  //Layout grid in base a level
   const level = parseInt(selectLevel.value);
   squareNumbers = decededNumbersInGrid(level);
   squareRow = decededNumbersInRow(level);
   //Array 16 numbers
   array16 = generateArrayRandomNumbers(16, squareNumbers);
-  console.log(array16); 
+  console.log(array16.sort(function(a, b){return a-b}))
   //Add grid
   const gridDiv = createGridDiv();
   mainDiv.append(gridDiv);
@@ -33,31 +33,34 @@ function startgame() {
   }
 }
 
-/**CLICK SQUARE
- * Quando elemento è cliccato aggiungo la classe del colore a quell'elemento
- * e poi lo visualizzo nella console
- */
+// CLICKED SQUARE - input user
 function clickedSquare() {
   const clickedNumber = parseInt(this.textContent);
   let scoreMessage = score.length;
+  let resultMessage;
 
+  //se NON è una bomba!
   if (!array16.includes(clickedNumber)) {
     this.classList.add("blue");
     if (!score.includes(clickedNumber)) {
       score.push(clickedNumber);
     }
     if (score.length === squareNumbers - 16) {
-      mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`;
+      resultMessage = `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`
+      mainDiv.innerHTML += resultMessage;
     }
-  } else {
+  }
+  //se è una bomba:
+  else {
     this.classList.add("red");
-    let resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
+    resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
     mainDiv.innerHTML += `${resultMessage} Punteggio: ${scoreMessage}`;
+    //pulire array score
     score = [];
   }
 }
 
-// UI FUNCTION -- create elements in html
+// UI FUNCTION -- create elements in html------------
 /** GRID
  * Description Create a div with class grid
  * @returns {object}
@@ -107,12 +110,10 @@ function generateArrayRandomNumbers(arrayLength, maxRangeNumber) {
   return arrayNumbers;
 }
 
-
-
 //FUNCTION LAYOUT GRID ------------------------------------------
 
 /** DATO IL LIVELLO DECIDO QUANTI QUADRATI REALIZZARE
- * Description funzione che decide quanti quadrati totali voglio 
+ * Description funzione che decide quanti quadrati totali voglio
  * @param {number} difficultyLevel il livello selezionato
  * @returns {number} quanti quadrati ci sono nella griglia
  */
@@ -127,8 +128,8 @@ function decededNumbersInGrid(difficultyLevel) {
   return squareInGrid;
 }
 
-/** DATO IL LIVELLO DECIDO QUANTI QUADRATI PER FILA MI SERVONO 
- * Description funzione che decide quanti quadrati voglio per riga 
+/** DATO IL LIVELLO DECIDO QUANTI QUADRATI PER FILA MI SERVONO
+ * Description funzione che decide quanti quadrati voglio per riga
  * @param {number} difficultyLevel il livello selezionato
  * @returns {number} quanti quadrati ci sono per riga
  */
