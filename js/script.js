@@ -32,9 +32,13 @@ function startgame() {
  * e poi lo visualizzo nella console
  */
 function clickedSquare() {
-  this.classList.add("blue");
   const clickedNumber = this.textContent;
   console.log(clickedNumber);
+  if (this.textContent % 2 === 0) {
+    this.classList.add("blue");
+  } else {
+    this.classList.add("red");
+  }
 }
 
 // UI FUNCTION -- create elements in html
