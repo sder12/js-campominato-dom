@@ -3,6 +3,11 @@ const mainDiv = document.querySelector("main");
 
 btnPlay.addEventListener("click", startgame);
 
+let squareNumbers = 100;
+//generate array bombs 16 random numbers without duplicate
+const array16 = generateArrayRandomNumbers(16, squareNumbers);
+console.log(array16);
+
 //FUNCTION-------------------------------------------
 /** STARTGAME
  * Description With the start/click create Grid - Square
@@ -14,17 +19,22 @@ function startgame() {
   mainDiv.append(gridDiv);
 
   // Create and add square
-  let squareNumbers = 100;
   for (let i = 1; i <= squareNumbers; i++) {
     const squareDiv = createSquareDiv(i);
     // click add blue
     squareDiv.addEventListener("click", clickedSquare);
     gridDiv.append(squareDiv);
   }
+}
 
-  //generate random numbers
-  const randomNumber = getRndInteger(1, squareNumbers)
-  console.log("random Number", randomNumber);
+/**CLICK SQUARE
+ * Quando elemento è cliccato aggiungo la classe del colore a quell'elemento
+ * e poi lo visualizzo nella console
+ */
+function clickedSquare() {
+  this.classList.add("blue");
+  const clickedNumber = this.textContent;
+  console.log(clickedNumber);
 }
 
 // UI FUNCTION -- create elements in html
@@ -50,19 +60,6 @@ function createSquareDiv(numberInside) {
   return divSquare;
 }
 
-/**FUNZIONE VOID > non ha return: CLICK del singolo NUMERO
- * Quando elemento è cliccato aggiungo la classe del colore a quell'elemento
- * e poi lo visualizzo nella console
- */
-function clickedSquare() {
-  this.classList.add("blue");
-  const clickedNumber = this.textContent;
-  console.log(clickedNumber);
-}
-
-
-
-
 //FUNCTION RANDOM NUMBER-----------------------
 //RANDOM NUMBERS GENERATOR W3school
 function getRndInteger(min, max) {
@@ -72,14 +69,15 @@ function getRndInteger(min, max) {
 /**
  * ARRAY WITH RANDOM NUMBERS
  * Description La funzione genera una array composta da numeri senza duplicati.
- * La lunghezza dell'array viene decisa nel parametro
- * @param {number} arrayLength n° di numeri nell'array
+ * La lunghezza dell'array e il max-range di numeri vengono decisi nel parametro
+ * @param {number} arrayLength quanti numeri voglio nell'array
+ * @param {number} maxRangeNumber il range va da 1 a quale altro numero?
  * @returns {array}
  */
-function generateArrayRandomNumbers(arrayLength) {
+function generateArrayRandomNumbers(arrayLength, maxRangeNumber) {
   const arrayNumbers = [];
   while (arrayNumbers.length < arrayLength) {
-    const randomNumber = getRndInteger(1, arrayLength);
+    const randomNumber = getRndInteger(1, maxRangeNumber);
     if (!arrayNumbers.includes(randomNumber)) {
       arrayNumbers.push(randomNumber);
     }
