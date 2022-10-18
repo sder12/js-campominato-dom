@@ -7,6 +7,12 @@ let squareNumbers = 100;
 //generate array bombs 16 random numbers without duplicate
 const array16 = generateArrayRandomNumbers(16, squareNumbers);
 console.log(array16);
+// let array16item;
+// for (let i = 0; i < array16.length; i++) {
+//   array16item = array16[i];
+//   console.log(array16item);
+// }
+
 
 //FUNCTION-------------------------------------------
 /** STARTGAME
@@ -32,13 +38,14 @@ function startgame() {
  * e poi lo visualizzo nella console
  */
 function clickedSquare() {
-  const clickedNumber = this.textContent;
+  const clickedNumber = parseInt(this.textContent);
   console.log(clickedNumber);
-  if (this.textContent % 2 === 0) {
-    this.classList.add("blue");
-  } else {
+  if (array16.includes(clickedNumber)) {
     this.classList.add("red");
+  } else {
+    this.classList.add("blue");
   }
+
 }
 
 // UI FUNCTION -- create elements in html
