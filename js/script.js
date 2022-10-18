@@ -7,33 +7,23 @@ btnPlay.addEventListener("click", startgame);
 let score = [];
 let array16 = [];
 let squareNumbers;
+let squareRow;
 
-//FUNCTION-------------------------------------------
-/** STARTGAME
- * Description With the start/click create Grid - Square
- */
+//FUNCTION WITH CLICK-------------------------------------
+/* StartGame - Play Btn */
 function startgame() {
-  const level = parseInt(selectLevel.value);  
-  let squareRow;
-  if(level === 1){
-    squareNumbers = 100;
-    squareRow = 10;
-  } else if (level === 2){
-    squareNumbers = 81;
-    squareRow = 9;
-  } else {
-    squareNumbers = 49;
-    squareRow = 7;
-  } 
+   //Clean the code
+   mainDiv.innerHTML = "";
+  //Layout grid in base a level 
+  const level = parseInt(selectLevel.value);
+  squareNumbers = decededNumbersInGrid(level);
+  squareRow = decededNumbersInRow(level);
   //Array 16 numbers
   array16 = generateArrayRandomNumbers(16, squareNumbers);
-  console.log(array16);
-  //Clean
-  mainDiv.innerHTML = "";
+  console.log(array16); 
   //Add grid
   const gridDiv = createGridDiv();
   mainDiv.append(gridDiv);
-
   // Create and add square
   for (let i = 1; i <= squareNumbers; i++) {
     let squareDiv = createSquareDiv(i, squareRow);
@@ -49,8 +39,6 @@ function startgame() {
  */
 function clickedSquare() {
   const clickedNumber = parseInt(this.textContent);
-  console.log(clickedNumber);
-
   let scoreMessage = score.length;
 
   if (!array16.includes(clickedNumber)) {
@@ -61,7 +49,6 @@ function clickedSquare() {
     if (score.length === squareNumbers - 16) {
       mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`;
     }
-    
   } else {
     this.classList.add("red");
     let resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
@@ -81,21 +68,21 @@ function createGridDiv() {
   return divGrid;
 }
 /** SQUARE
- * Description Create a div with two classes and a number inside
- * @param {number} numberInside
- * @returns {object}
+ * Description Create a div SQUARE con lo style inline per le dimensioni
+ * @param {number} numberInside che testo inserisco nel div
+ * @param {number} numberOfSquaresInRow quanti square voglio per riga
+ * @returns {object} il div square
  */
 function createSquareDiv(numberInside, numberOfSquaresInRow) {
   const divSquare = document.createElement("div");
   divSquare.classList.add("square");
-  // divSquare.classList.add("square-simple");
   divSquare.style.width = `calc(100% / ${numberOfSquaresInRow})`;
   divSquare.style.height = `calc(100% / ${numberOfSquaresInRow})`;
   divSquare.innerHTML = numberInside;
   return divSquare;
 }
 
-//FUNCTION RANDOM NUMBER-----------------------
+//FUNCTION RANDOM NUMBER---------------------------
 //RANDOM NUMBERS GENERATOR W3school
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -118,4 +105,40 @@ function generateArrayRandomNumbers(arrayLength, maxRangeNumber) {
     }
   }
   return arrayNumbers;
+}
+
+
+
+//FUNCTION LAYOUT GRID ------------------------------------------
+
+/** DATO IL LIVELLO DECIDO QUANTI QUADRATI REALIZZARE
+ * Description funzione che decide quanti quadrati totali voglio 
+ * @param {number} difficultyLevel il livello selezionato
+ * @returns {number} quanti quadrati ci sono nella griglia
+ */
+function decededNumbersInGrid(difficultyLevel) {
+  if (difficultyLevel === 1) {
+    squareInGrid = 100;
+  } else if (difficultyLevel === 2) {
+    squareInGrid = 81;
+  } else {
+    squareInGrid = 49;
+  }
+  return squareInGrid;
+}
+
+/** DATO IL LIVELLO DECIDO QUANTI QUADRATI PER FILA MI SERVONO 
+ * Description funzione che decide quanti quadrati voglio per riga 
+ * @param {number} difficultyLevel il livello selezionato
+ * @returns {number} quanti quadrati ci sono per riga
+ */
+function decededNumbersInRow(difficultyLevel) {
+  if (difficultyLevel === 1) {
+    squareInRow = 10;
+  } else if (difficultyLevel === 2) {
+    squareInRow = 9;
+  } else {
+    squareInRow = 7;
+  }
+  return squareInRow;
 }
