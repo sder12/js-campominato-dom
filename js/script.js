@@ -14,12 +14,17 @@ function startgame() {
   mainDiv.append(gridDiv);
 
   // Create and add square
-  for (let i = 1; i < 101; i++) {
+  let squareNumbers = 100;
+  for (let i = 1; i <= squareNumbers; i++) {
     const squareDiv = createSquareDiv(i);
     // click add blue
     squareDiv.addEventListener("click", clickedSquare);
     gridDiv.append(squareDiv);
   }
+
+  //generate random numbers
+  const randomNumber = getRndInteger(1, squareNumbers)
+  console.log("random Number", randomNumber);
 }
 
 // UI FUNCTION -- create elements in html
