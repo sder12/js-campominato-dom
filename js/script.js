@@ -4,17 +4,33 @@ const selectLevel = document.getElementById("level");
 
 btnPlay.addEventListener("click", startgame);
 
-let squareNumbers = 100;
-//generate array bombs 16 random numbers without duplicate
-const array16 = generateArrayRandomNumbers(16, squareNumbers);
-console.log(array16);
 let score = [];
+let array16 = [];
+let squareNumbers;
 
 //FUNCTION-------------------------------------------
 /** STARTGAME
  * Description With the start/click create Grid - Square
  */
 function startgame() {
+  const level = parseInt(selectLevel.value);
+
+  
+  let squareRow;
+  if(level === 1){
+    squareNumbers = 100;
+    squareRow = 10;
+  } else if (level === 2){
+    squareNumbers = 81;
+    squareRow = 9;
+  } else {
+    squareNumbers = 49;
+    squareRow = 7;
+  } 
+  //Array 16 numbers
+  array16 = generateArrayRandomNumbers(16, squareNumbers);
+  console.log(array16);
+  //Clean
   mainDiv.innerHTML = "";
   //Add grid
   const gridDiv = createGridDiv();
@@ -22,7 +38,7 @@ function startgame() {
 
   // Create and add square
   for (let i = 1; i <= squareNumbers; i++) {
-    const squareDiv = createSquareDiv(i);
+    const squareDiv = createSquareDiv(i, squareRow);
     // click add blue
     squareDiv.addEventListener("click", clickedSquare);
     gridDiv.append(squareDiv);
@@ -35,25 +51,23 @@ function startgame() {
  */
 function clickedSquare() {
   const clickedNumber = parseInt(this.textContent);
-  console.log(clickedNumber);  
- 
+  console.log(clickedNumber);
+
   let scoreMessage = score.length;
 
-  if(!array16.includes(clickedNumber)){
+  if (!array16.includes(clickedNumber)) {
     this.classList.add("blue");
-    if(!score.includes(clickedNumber)){
-      score.push(clickedNumber);      
+    if (!score.includes(clickedNumber)) {
+      score.push(clickedNumber);
     }
-    if(score.length === squareNumbers - 16){
-      mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`
+    if (score.length === squareNumbers - 16) {
+      mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`;
     }
-  }else{
+  } else {
     this.classList.add("red");
     let resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
     mainDiv.innerHTML += `${resultMessage} Punteggio: ${scoreMessage}`;
-    
   }
-  
 }
 
 // UI FUNCTION -- create elements in html
@@ -71,10 +85,12 @@ function createGridDiv() {
  * @param {number} numberInside
  * @returns {object}
  */
-function createSquareDiv(numberInside) {
+function createSquareDiv(numberInside, numberOfSquaresInRow) {
   const divSquare = document.createElement("div");
   divSquare.classList.add("square");
-  divSquare.classList.add("square-simple");
+  // divSquare.classList.add("square-simple");
+  divSquare.style.width = `calc(100% / ${numberOfSquaresInRow})`;
+  divSquare.style.height = `calc(100% / ${numberOfSquaresInRow})`;
   divSquare.innerHTML = numberInside;
   return divSquare;
 }
