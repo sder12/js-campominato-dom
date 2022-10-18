@@ -13,9 +13,7 @@ let squareNumbers;
  * Description With the start/click create Grid - Square
  */
 function startgame() {
-  const level = parseInt(selectLevel.value);
-
-  
+  const level = parseInt(selectLevel.value);  
   let squareRow;
   if(level === 1){
     squareNumbers = 100;
@@ -38,7 +36,7 @@ function startgame() {
 
   // Create and add square
   for (let i = 1; i <= squareNumbers; i++) {
-    const squareDiv = createSquareDiv(i, squareRow);
+    let squareDiv = createSquareDiv(i, squareRow);
     // click add blue
     squareDiv.addEventListener("click", clickedSquare);
     gridDiv.append(squareDiv);
@@ -63,10 +61,12 @@ function clickedSquare() {
     if (score.length === squareNumbers - 16) {
       mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`;
     }
+    
   } else {
     this.classList.add("red");
     let resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
     mainDiv.innerHTML += `${resultMessage} Punteggio: ${scoreMessage}`;
+    score = [];
   }
 }
 
