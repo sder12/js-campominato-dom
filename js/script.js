@@ -1,5 +1,6 @@
 const btnPlay = document.getElementById("button-play");
 const mainDiv = document.querySelector("main");
+const selectLevel = document.getElementById("level");
 
 btnPlay.addEventListener("click", startgame);
 
@@ -7,12 +8,7 @@ let squareNumbers = 100;
 //generate array bombs 16 random numbers without duplicate
 const array16 = generateArrayRandomNumbers(16, squareNumbers);
 console.log(array16);
-// let array16item;
-// for (let i = 0; i < array16.length; i++) {
-//   array16item = array16[i];
-//   console.log(array16item);
-// }
-
+let score = [];
 
 //FUNCTION-------------------------------------------
 /** STARTGAME
@@ -39,13 +35,25 @@ function startgame() {
  */
 function clickedSquare() {
   const clickedNumber = parseInt(this.textContent);
-  console.log(clickedNumber);
-  if (array16.includes(clickedNumber)) {
-    this.classList.add("red");
-  } else {
-    this.classList.add("blue");
-  }
+  console.log(clickedNumber);  
+ 
+  let scoreMessage = score.length;
 
+  if(!array16.includes(clickedNumber)){
+    this.classList.add("blue");
+    if(!score.includes(clickedNumber)){
+      score.push(clickedNumber);      
+    }
+    if(score.length === squareNumbers - 16){
+      mainDiv.innerHTML += `<h3 class="result"> CONGRATULAZIONI! Hai vinto! </h3>`
+    }
+  }else{
+    this.classList.add("red");
+    let resultMessage = `<h3 class="result"> Hai cliccato su una bomba! Hai perso!</h3>`;
+    mainDiv.innerHTML += `${resultMessage} Punteggio: ${scoreMessage}`;
+    
+  }
+  
 }
 
 // UI FUNCTION -- create elements in html

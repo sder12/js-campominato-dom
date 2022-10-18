@@ -35,6 +35,7 @@ main {
   height: calc(100% - (var(--footer-height) + var(--header-height)));
   background-color: lightsteelblue;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -88,4 +89,8 @@ footer {
 
 .red{
   background-color: lightcoral;
+}
+
+.result{
+  margin-top: 20px;
 }
